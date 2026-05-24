@@ -2,11 +2,9 @@ package io.GitHub.LumaGonzaga.ProdutosAPI.controller;
 
 import io.GitHub.LumaGonzaga.ProdutosAPI.model.Produto;
 import io.GitHub.LumaGonzaga.ProdutosAPI.repository.ProdutoRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController// Mostra que a classe é um controlador Rest
@@ -38,5 +36,13 @@ public class ProdutoController {
         }
         */
 
+    }
+    @GetMapping("/{id}")
+    public Produto obterPorId(@PathVariable("id") String id){
+
+        Optional<Produto> produto = produtoRepository.findById(id);//procura no repository(Banco de dados) o ID, o Optional é porque pode ser que venha vazio
+        return produto.isPresent() ? produto.get() : null; //Verifica se o produto está presente, se não estiver, retorna null
+        /* Ou
+        * return produtoRepository.findById(id).orElse(null); juntou os dois acima nesse*/
     }
 }
