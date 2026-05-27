@@ -38,11 +38,17 @@ public class ProdutoController {
 
     }
     @GetMapping("/{id}")
-    public Produto obterPorId(@PathVariable("id") String id){
+    public Produto salvar(@PathVariable("id") String id){
 
-        Optional<Produto> produto = produtoRepository.findById(id);//procura no repository(Banco de dados) o ID, o Optional é porque pode ser que venha vazio
-        return produto.isPresent() ? produto.get() : null; //Verifica se o produto está presente, se não estiver, retorna null
-        /* Ou
-        * return produtoRepository.findById(id).orElse(null); juntou os dois acima nesse*/
+        ///Optional<Produto> produto = produtoRepository.findById(id);//procura no repository(Banco de dados) o ID, o Optional é porque pode ser que venha vazio
+        //return produto.isPresent() ? produto.get() : null; //Verifica se o produto está presente, se não estiver, retorna null
+        // Ou
+        return produtoRepository.findById(id).orElse(null); //juntou os dois acima nesse
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable("id") String id){
+
+        produtoRepository.deleteById(id);
     }
 }
